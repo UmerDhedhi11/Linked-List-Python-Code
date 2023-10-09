@@ -1,0 +1,54 @@
+myList = [" "] *10
+myPointer = [0] *10
+freeP = 0
+startP = -1
+
+for x in range(9):
+    myPointer[x] = x + 1
+myPointer[9] = -1
+
+def insert(item):
+    global startP
+    global freeP
+    if(freeP == -1):
+        print("List is full")
+    else:
+        tempP = startP
+        startP = freeP
+        freeP = myPointer[freeP]
+        myList[startP] = item
+        myPointer[startP] = tempP
+
+insert("John")
+insert("Wick")
+print(myList)
+
+
+def delete(item):
+    global startP
+    global freeP
+    if(startP == -1):
+        print("List is empty")
+    else:
+        index = startP
+        while(myList[index] != item and index != -1):
+            oldindex = index
+            index = myPointer[index]
+        if(index == -1):
+            print("Item not found")
+        else:
+            if(index == startP):
+                startP = myPointer[startP]
+                myPointer[index] = freeP
+                freeP = index
+            else:
+                tempP = myPointer[index]
+                myPointer[index] = freeP
+                freeP = index
+                myPointer[oldindex] = tempP
+
+delete ("John")
+insert ("Ben")
+delete ("Wick")
+insert(" ")
+print(myList)
